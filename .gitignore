@@ -1,0 +1,22 @@
+# Explicitly ensure binary assets and fonts are tracked by Git
+!*.png
+!*.jpg
+!*.jpeg
+!*.svg
+!*.webp
+!*.gif
+!*.ttf
+!*.otf
+!*.woff
+!*.woff2
+!*.eot
+
+# Sensitive files & environments
+.env
+.env.local
+*.pem
+*.key
+
+# System / OS files
+.DS_Store
+Thumbs.db
