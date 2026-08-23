@@ -31,7 +31,6 @@ body {
   color: var(--text);
   min-height: 100vh;
   overflow-x: hidden;
-  cursor: none;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
@@ -45,7 +44,6 @@ a,
 input,
 textarea,
 select {
-  cursor: none;
 }
 
 body.no-scroll {
@@ -195,72 +193,6 @@ img {
     radial-gradient(circle at 75% 30%, rgba(123, 107, 90, 0.12), transparent 24%),
     radial-gradient(circle at 50% 70%, rgba(181, 165, 130, 0.10), transparent 28%),
     var(--bg);
-}
-
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 0;
-  height: 0;
-  pointer-events: none;
-  z-index: 999;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.cursor.visible {
-  opacity: 1;
-}
-
-.cursor-dot,
-.cursor-ring,
-.cursor-label {
-  position: absolute;
-  left: 0;
-  top: 0;
-  transform: translate(-50%, -50%);
-}
-
-.cursor-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: rgba(17, 17, 17, 0.82);
-  opacity: 0.75;
-  transition: opacity 0.2s ease, transform 0.2s ease;
-}
-
-.cursor-ring {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  border: 1px solid rgba(17, 17, 17, 0.42);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.2);
-  transition: width 0.18s ease, height 0.18s ease, border-color 0.18s ease, opacity 0.18s ease, transform 0.08s ease;
-}
-
-.cursor-label {
-  display: none;
-}
-
-.cursor.hover .cursor-ring {
-  width: 18px;
-  height: 18px;
-  border-color: rgba(17, 17, 17, 0.7);
-  opacity: 0.85;
-}
-
-.cursor.hover .cursor-dot {
-  opacity: 0.9;
-  transform: scale(0.8);
-}
-
-.cursor.is-text .cursor-ring {
-  width: 16px;
-  height: 16px;
-  border-radius: 4px;
 }
 
 .page-shell {
@@ -1483,6 +1415,15 @@ img {
     text-align: center;
   }
 
+  .brand-wrapper {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .cmd-trigger-btn {
+    display: none; /* hide Ctrl+K on tablet — touch users can't use keyboard shortcuts */
+  }
+
   .hero {
     height: 170vh;
   }
@@ -1495,6 +1436,10 @@ img {
   .about-grid,
   .work-grid {
     grid-template-columns: 1fr;
+  }
+
+  .snapshot-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .skills-shell {
@@ -1525,6 +1470,15 @@ img {
     right: 16px;
     bottom: 16px;
   }
+
+  /* Hide floating parallax chips on tablet — they overlap content */
+  .floating-chip {
+    display: none;
+  }
+
+  .overview-info-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 640px) {
@@ -1536,6 +1490,24 @@ img {
     padding-top: 10px;
   }
 
+  /* ---- NAV ---- */
+  .nav {
+    gap: 10px;
+    padding: 10px 12px;
+  }
+
+  .nav-links {
+    gap: 8px;
+    font-size: 0.58rem;
+    flex-wrap: wrap;
+  }
+
+  .nav-button {
+    padding: 0.7rem 1rem;
+    font-size: 0.65rem;
+  }
+
+  /* ---- HERO ---- */
   .hero {
     margin-top: -36px;
     height: 158vh;
@@ -1546,16 +1518,28 @@ img {
   }
 
   .hero-copy {
+    width: min(100%, 88vw);
     margin-left: 12px;
     padding-bottom: 28px;
   }
 
   .hero-copy h1 {
-    font-size: clamp(2.75rem, 16vw, 4.8rem);
+    font-size: clamp(2.4rem, 14vw, 4.8rem);
   }
 
   .intro {
-    font-size: 0.97rem;
+    font-size: 0.95rem;
+  }
+
+  .actions {
+    gap: 10px;
+    margin-top: 1.25rem;
+  }
+
+  .primary-button,
+  .secondary-button {
+    padding: 0.75rem 1.1rem;
+    font-size: 0.68rem;
   }
 
   .hero-meta {
@@ -1571,31 +1555,56 @@ img {
     font-size: 0.72rem;
   }
 
+  /* ---- SECTIONS ---- */
   .section {
-    padding-top: 88px;
+    padding-top: 72px;
   }
 
   .section-head.split {
     flex-direction: column;
     align-items: flex-start;
+    gap: 10px;
   }
 
   .lede {
-    font-size: clamp(2rem, 10vw, 3.3rem);
+    font-size: clamp(1.8rem, 9vw, 3.3rem);
   }
 
+  /* ---- ABOUT ---- */
+  .about-grid p:last-child {
+    font-size: 0.97rem;
+  }
+
+  /* ---- SNAPSHOT GRID ---- */
+  .snapshot-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 18px;
+  }
+
+  .snapshot-card {
+    padding: 18px 16px 14px;
+    border-radius: 20px;
+  }
+
+  .snapshot-card .count {
+    font-size: clamp(1.8rem, 7vw, 3rem);
+  }
+
+  /* ---- SKILLS ---- */
   .skills-shell {
     min-height: 390px;
   }
 
   .skill-orbit li {
-    min-width: 86px;
-    padding: 8px 10px;
-    font-size: 0.58rem;
-    letter-spacing: 0.1em;
-    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(130px) rotate(calc(-1 * var(--angle)));
+    min-width: 80px;
+    padding: 7px 9px;
+    font-size: 0.55rem;
+    letter-spacing: 0.09em;
+    transform: translate(-50%, -50%) rotate(var(--angle)) translateX(120px) rotate(calc(-1 * var(--angle)));
   }
 
+  /* ---- CERTIFICATES ---- */
   .certificates-carousel {
     grid-template-columns: 1fr;
     gap: 10px;
@@ -1606,17 +1615,107 @@ img {
   }
 
   .certificate-card {
-    flex-basis: 78%;
-    min-height: 320px;
+    flex-basis: 82%;
+    min-height: 300px;
   }
 
   .certificate-card.active {
-    flex-basis: 78%;
+    flex-basis: 82%;
   }
 
+  .certificate-content h4 {
+    font-size: clamp(1rem, 4vw, 1.5rem);
+  }
+
+  /* ---- KEYBOARD CARD ---- */
+  .keyboard-experience-card {
+    padding: 20px 12px;
+    gap: 14px;
+    border-radius: 18px;
+  }
+
+  .keyboard-intro-text h3 {
+    font-size: 1.1rem;
+  }
+
+  .keyboard-intro-text p {
+    font-size: 0.85rem;
+  }
+
+  /* ---- OVERVIEW INFO ---- */
+  .overview-info-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 14px 16px;
+  }
+
+  .info-tile {
+    gap: 10px;
+  }
+
+  .info-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.95rem;
+  }
+
+  /* ---- CONTACT ---- */
+  .contact-panel {
+    padding: 24px 18px;
+    border-radius: 22px;
+  }
+
+  .contact-panel h2 {
+    font-size: clamp(1.9rem, 9vw, 3.5rem);
+  }
+
+  .contact-links {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .contact-link {
+    justify-content: flex-start;
+    min-height: 52px;
+    font-size: 0.78rem;
+  }
+
+  /* ---- FOOTER ---- */
   .site-footer {
     flex-direction: column;
     text-align: center;
+    gap: 10px;
+  }
+
+  /* ---- SCROLL RING ---- */
+  .scroll-progress {
+    display: none; /* too cluttered on small screens */
+  }
+
+  /* ---- PARTICLE TYPOGRAPHY ---- */
+  #particleTypographyContainer {
+    min-height: 180px !important;
+    border-radius: 18px !important;
+  }
+}
+
+/* ---- Very small phones (iPhone SE, Galaxy A, etc.) ---- */
+@media (max-width: 390px) {
+  .hero-copy h1 {
+    font-size: clamp(2rem, 13vw, 3.5rem);
+  }
+
+  .snapshot-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .overview-info-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .nav-links a:not(:first-child):not(:last-child) {
+    display: none; /* keep only first & last nav link on tiny screens */
   }
 }
 
